@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export const baseURL = 'http://localhost:8080/server'
+export const baseURL = 'https://test1-project.vercel.app//server'
 const tokenURL = `${baseURL}/token/refresh/`
 
 axios.defaults.xsrfCookieName = 'csrftoken';
