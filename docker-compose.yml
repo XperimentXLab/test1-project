@@ -1,0 +1,34 @@
+
+services:
+  backend:
+    build: ./test1server
+    volumes:
+      - ./test1server:/app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    env_file:
+      - ./test1server/.envbackend
+
+  frontend:
+    build: ./test1
+    volumes:
+      - ./test1:/app
+      - /app/node_modules 
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+  db:
+    image: postgres:14
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    env_file:
+      - .envfull
+    ports:
+      - "5432:5432"
+
+volumes:
+  pg_data:
