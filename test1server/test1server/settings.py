@@ -40,6 +40,11 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 DEBUG = env_to_bool('DJANGO_DEBUG', False)
 
+VERCEL_FRONTEND_URL = os.environ.get('VERCEL_FRONTEND_URL')
+#RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+#if RENDER_EXTERNAL_HOSTNAME:
+#    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
 
 # --- CORS Configuration ---
@@ -48,18 +53,18 @@ CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS').split(',')
 
+
+
 SAME_DOMAIN = env_to_bool('SAME_DOMAIN', False)
 
 _samesite_env_val = os.environ.get('CSRF_COOKIE_SAMESITE', 'Lax') 
 CSRF_COOKIE_SAMESITE = None if _samesite_env_val.lower() == 'none' else _samesite_env_val
-
 SECURE_SSL_REDIRECT = env_to_bool('SECURE_SSL_REDIRECT', False)
 CSRF_COOKIE_SECURE = env_to_bool('CSRF_COOKIE_SECURE', False)
 CSRF_COOKIE_NAME = os.environ.get('CSRF_COOKIE_NAME', 'csrftoken')
 SESSION_COOKIE_SECURE = env_to_bool('SESSION_COOKIE_SECURE', False)
 CSRF_COOKIE_HTTPONLY = env_to_bool('CSRF_COOKIE_HTTPONLY', False) # Allow the frontend to access the token
 
-#VERCEL_FRONTEND_URL = os.environ.get('VERCEL_FRONTEND_URL')
 
 # Application definition
 
