@@ -8,13 +8,8 @@ https://docs.djangoproject.com/en/5.2/howto/deployment/wsgi/
 """
 
 import os
-from dotenv import load_dotenv
-from pathlib import Path
 
 from django.core.wsgi import get_wsgi_application
-
-dotenv_path = Path(__file__).resolve().parent.parent / '.envbackend'
-load_dotenv(dotenv_path=dotenv_path)
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'test1server.settings')
 
