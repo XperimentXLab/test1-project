@@ -60,6 +60,7 @@ const MainLayout = () => {
           <NavLinkss to={'/'} >Home</NavLinkss>
           <NavLinkss to={'/profile'} >Profile</NavLinkss>
           <NavLinkss to={'/wallet'}>Wallet</NavLinkss>
+          <NavLinkss to={'/others'}>Others</NavLinkss>
         </nav>
         }
       </div>

@@ -24,17 +24,17 @@ const Wallet = () => {
       <div className="flex flex-col gap-5">
         <div className="flex flex-col border-gray-500 border py-4 px-6 rounded-xl">
           <span className="font-bold">Register Point</span>
-          <span>... how many register point ...</span>
+          <span>0</span>
         </div>
 
         <div className="flex flex-col border-gray-500 border py-4 px-6 rounded-xl">
           <span className="font-bold">Profit Point</span>
-          <span>... how many profit point ...</span>
+          <span>0</span>
         </div>
 
         <div className="flex flex-col border-gray-500 border py-4 px-6 rounded-xl">
           <span className="font-bold">Comission Point</span>
-          <span>... how many comission point ...</span>
+          <span>0</span>
         </div>
       </div>
       

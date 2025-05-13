@@ -2,7 +2,6 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router"
 import { login } from "../../auth/endpoints"
-import axios from "axios"
 
 const Login = () => {
 
@@ -27,22 +26,14 @@ const Login = () => {
       })
       console.log(`Login successful, cookies should be set.`);
       resetForm()
-      navigate('/') // Navigate to home page after successful login
+      navigate('/')
     } catch (error: any) {
-      console.error("Login failed :", error)
-      if (axios.isAxiosError(error)) {
-        console.error("Axios error data:", error.response?.data);
-        console.error("Axios error status:", error.response?.status);
-        setErrorMessage('Error logging in. Please contact administrator')
-      }
       if (error.response && (error.response.status === 401 || error.response.status === 400)) {
           // This is likely an authentication failure (e.g., wrong credentials, bad request for auth)
-          console.error("Authentication error response:", error.response.data);
           // Use the backend's detail message if available, otherwise the generic one
           setErrorMessage(error.response.data?.detail || 'Invalid email or password.');
         } else if (error.response) {
           // Other errors from the server (e.g., 500, 403, 404)
-          console.error("Server error data:", error.response.data, "Status:", error.response.status);
           setErrorMessage('A server error occurred. Please try again later or contact an administrator.');
         } else {
           // Network errors or other Axios errors where no response was received

@@ -7,6 +7,7 @@ import Profile from "./components/pages/Profile"
 import NotFound from "./components/pages/NotFound"
 import Wallet from "./components/pages/Wallet"
 import ProtectedRoute from "./auth/ProtectedRoute"
+import Others from "./components/pages/Others"
 
 function App() {
 
@@ -14,8 +15,15 @@ function App() {
     <Route>
       <Route path="/" element={<MainLayout />} >
         <Route index element={<ProtectedRoute><Home /></ProtectedRoute>} />
-        <Route path="profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-        <Route path='wallet' element={<ProtectedRoute><Wallet /></ProtectedRoute>} />
+        <Route path="profile" element={<ProtectedRoute>
+          <Profile />
+        </ProtectedRoute>} />
+        <Route path='wallet' element={<ProtectedRoute>
+          <Wallet />
+        </ProtectedRoute>} />
+        <Route path="others" element={<ProtectedRoute>
+          <Others />
+        </ProtectedRoute>} />
       </Route>
 
       <Route path="login" element={<Login />} />

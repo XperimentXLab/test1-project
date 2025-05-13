@@ -40,18 +40,17 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 DEBUG = env_to_bool('DJANGO_DEBUG', False)
 
-VERCEL_FRONTEND_URL = os.environ.get('VERCEL_FRONTEND_URL')
+#VERCEL_FRONTEND_URL = os.environ.get('VERCEL_FRONTEND_URL')
 #RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
 
 # --- CORS Configuration ---
 CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS').split(',')
+
 CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS').split(',')
-
-
 
 SAME_DOMAIN = env_to_bool('SAME_DOMAIN', False)
 
