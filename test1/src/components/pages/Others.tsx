@@ -69,8 +69,8 @@ const Others = () => {
             }}
             value={profitRate}
           />
-          <button type="submit" className="border p-2 rounded-md hover:bg-black hover:text-white hover:cursor-pointer">Calculate</button>
-          <button type="reset" className="border p-2 rounded-md hover:bg-black hover:text-white hover:cursor-pointer" onClick={resetForm}>Reset</button>
+          <button type="submit" className="border p-2 rounded-md active:bg-black active:text-white hover:bg-black hover:text-white hover:cursor-pointer">Calculate</button>
+          <button type="reset" className="border p-2 rounded-md active:bg-black active:text-white hover:bg-black hover:text-white hover:cursor-pointer" onClick={resetForm}>Reset</button>
 
           <h1 className="border p-2 rounded-md">Profit Sharing: 0.5</h1>
           <h1 className="border p-2 rounded-md">Total Profit: {totalProfit}</h1>
@@ -78,9 +78,8 @@ const Others = () => {
         </form>
       </div>
 
-      <div className="grid grid-rows-2 gap-1 border rounded-xl p-3">
+      <div className="grid grid-rows-2 gap-1 rounded-xl p-3">
         <span className="font-bold text-md">Inbox</span>
-        <span className="p-1">All latest inbox here...</span>
       </div>
 
     </div>

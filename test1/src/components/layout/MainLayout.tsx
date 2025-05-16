@@ -47,7 +47,7 @@ const MainLayout = () => {
       <div>
         <header className="flex justify-between items-center py-2 px-3 bg-amber-300">
           <GiHamburgerMenu className="cursor-pointer" onClick={toggleOpen}/>
-          <h1 className="cursor-default">Test1 - Project</h1>
+          <h1 className="cursor-default">MMS - Test Project</h1>
           <button onClick={toggleLogout}
             className="cursor-pointer hover:bg-amber-600 py-1 px-3 rounded-lg"
           >Logout</button>      

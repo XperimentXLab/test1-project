@@ -1,9 +1,20 @@
-from .serializers import UserSerializer
+from .serializers import (
+  UserSerializer,
+  PasswordResetSerializer,
+  SetNewPasswordSerializer
+)
+from .models import User
 from django.contrib.auth import authenticate
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
+from rest_framework_simplejwt.token_blacklist.models import OutstandingToken, BlacklistedToken
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.utils.encoding import force_bytes, force_str
+#from django.core.mail import send_mail
+#from django.template.loader import render_to_string 
 
 from django.conf import settings
 import logging
@@ -79,9 +90,10 @@ def register_user(request, *args, **kwargs):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login(request):
-  email = request.data.get('email')
+  username = request.data.get('username')
   password = request.data.get('password')
-  user = authenticate(request, email=email, password=password)
+  user = authenticate(request, username=username, password=password)
+
   if user:
     refresh = RefreshToken.for_user(user)
     response = Response({'message': 'Login successful'})
@@ -115,3 +127,58 @@ def logout(request):
   return response
 
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def request_password_reset_email(request):
+  serializer = PasswordResetSerializer(data=request.data)
+  if serializer.is_valid():
+     email = serializer.validated_data['email']
+     try:
+        user = User.objects.get(email=email)
+        uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+        token = default_token_generator.make_token(user)
+
+        #frontend_url = getattr(settings, 'FRONTEND_URL', 'https://test1-project.vercel.app') 
+        frontend_url = getattr(settings, 'FRONTEND_URL', 'https://localhost:5173')
+        reset_link = f"{frontend_url}/reset-password-confirm/{uidb64}/{token}/"
+        
+        subject = 'Password Reset Requested'
+        reset_password_template = "password_reset_email.html"
+        c = {
+            "email": user.email,
+            "domain": request.get_host(), # or your frontend domain
+            "site_name": "Test1-Project",
+            "uid": uidb64,
+            "user": user,
+            "token": token,
+            "protocol": 'https' if not settings.DEBUG else 'http',
+            "reset_link": reset_link,
+        }
+        #message = render_to_string(reset_password_template, c)
+        message = f"Hello {user.username},\n\nPlease click the link below to reset your password:\n{reset_link}\n\nIf you did not request this, please ignore this email.\n\nThanks,\nThe Team"
+
+        #Email Configuration: The request_password_reset_email view currently logs the reset link to your console/logger. For it to actually send emails, you'll need to configure Django's email settings in your settings.py file (e.g., EMAIL_BACKEND, EMAIL_HOST, EMAIL_PORT, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, etc.). Once configured, you can uncomment the send_mail line in views.py.
+        # TODO: Configure email backend in settings.py and uncomment send_mail
+        # send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])
+        #   logger.info(f"Password reset link for {user.email}: {reset_link} (Email sending is currently simulated)")
+        # print(f"DEBUG: Password reset link for {user.email}: {reset_link}") # For local testing if email is not set up
+
+        logger.info(f"Password reset link for {user.email}: {reset_link}")
+        return Response({'message': 'If an account with this email, a password reset link will be sent.'}, status=200)
+     except User.DoesNotExist:
+        return Response({'message': 'If an account with this email exists, a password reset link has been sent.'}, status=200)
+     except Exception as e:
+        logger.error(f"Error sending password reset email: {e}", exc_info=True)
+        return Response({'error': 'User with this email does not exist.'}, status=404)
+  return Response(serializer.errors, status=400)
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def password_reset_confirm(request, uidb64, token):
+    serializer = SetNewPasswordSerializer(data=request.data, context={'uidb64': uidb64, 'token': token})
+    if serializer.is_valid():
+        user = serializer.validated_data['user']
+        user.set_password(serializer.validated_data['password'])
+        user.save()
+        return Response({'message': 'Password has been reset successfully.'}, status=200)
+    return Response(serializer.errors, status=400)

@@ -2,7 +2,7 @@ import api from "./api"
 
 
 interface LoginDataRes {
-  email: string
+  username: string
   password: string
 }
 
@@ -13,10 +13,31 @@ interface RegisterDataRes {
   password: string
 }
 
+interface PasswordResetConfirmDataRes {
+  uidb64?: string
+  token?: string
+  password: string;
+  password2: string;
+}
+
+
+export const reset_password_request = async (email: string) => {
+  const response = await api.post('/password_reset/', email)
+  return response.data
+}
+
+export const reset_password_confirm = async (DataConfirm: PasswordResetConfirmDataRes) => {
+  const { uidb64, token, password, password2 } = DataConfirm
+  const response = await api.post(`/password_reset_confirm/${uidb64}/${token}/`, {
+    password, password2
+  })
+  return response.data
+}
+
 export const login = async (loginData: LoginDataRes) => {
-  const { email, password } = loginData
+  const { username, password } = loginData
   const response = await api.post('/login/', {
-    email, password
+    username, password
   })
   return response.data
 }

@@ -5,7 +5,7 @@ import { login } from "../../auth/endpoints"
 
 const Login = () => {
 
-  const [email, setEmail] = useState<string>('')
+  const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
 
   const [errorMessage, setErrorMessage] = useState<string>('')
@@ -13,7 +13,7 @@ const Login = () => {
   const navigate = useNavigate()
 
   const resetForm = () => {
-    setEmail('')
+    setUsername('')
     setPassword('')
     setErrorMessage('')
   }
@@ -22,7 +22,7 @@ const Login = () => {
     e.preventDefault()
     try {
       await login({
-        email, password
+        username, password
       })
       console.log(`Login successful, cookies should be set.`);
       resetForm()
@@ -31,7 +31,7 @@ const Login = () => {
       if (error.response && (error.response.status === 401 || error.response.status === 400)) {
           // This is likely an authentication failure (e.g., wrong credentials, bad request for auth)
           // Use the backend's detail message if available, otherwise the generic one
-          setErrorMessage(error.response.data?.detail || 'Invalid email or password.');
+          setErrorMessage(error.response.data?.detail || 'Invalid username or password.');
         } else if (error.response) {
           // Other errors from the server (e.g., 500, 403, 404)
           setErrorMessage('A server error occurred. Please try again later or contact an administrator.');
@@ -42,6 +42,10 @@ const Login = () => {
     } 
   }
 
+  const toggleResetPassword = async () => {
+    navigate('/forgot-password/')
+  }
+
   return (
     <div className="flex min-h-screen justify-center">
 
@@ -50,10 +54,10 @@ const Login = () => {
 
         <form className="grid grid-row-3 gap-5 p-5 shadow-xl shadow-amber-600" onSubmit={toggleLogin}>
           <div className="grid grid-row-2 gap-2">
-            <span>Email</span>
-            <input type="email" placeholder="Enter email" 
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
+            <span>Username</span>
+            <input type="text" placeholder="Enter Username" 
+              onChange={(e) => setUsername(e.target.value)}
+              value={username}
               className="border py-1 px-2 rounded-md" 
               />
           </div>
@@ -69,7 +73,11 @@ const Login = () => {
 
           {errorMessage && <span className="text-red-500 text-md">{errorMessage}</span>}
 
-          <button type="submit" className="bg-black text-white hover:bg-amber-300 hover:text-black hover:cursor-pointer py-2 px-3 rounded-lg font-bold">Login</button>
+          <button type="submit" className="bg-black text-white active:bg-amber-300 active:text-black hover:bg-amber-300 hover:text-black hover:cursor-pointer py-2 px-3 rounded-lg font-bold">Login</button>
+
+          <span className="text-sm text-amber-950 cursor-pointer" onClick={toggleResetPassword}>
+            Forgot password?
+          </span>
 
           <span>
             Don't have an account? <Link to={'/register'} className="text-blue-400 text-md">Click to Register</Link>
