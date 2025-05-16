@@ -24,6 +24,9 @@ const Wallet = () => {
       try {
         const response = await get_user()
         setWalletAddress(response.wallet_address)
+        setRegisterPoint(0)
+        setProfitPoint(0)
+        setComissionPoint(0)
         setLoading(true)
       } catch (error: any) {
         console.error('Error fetching user data:', error)
