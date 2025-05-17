@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { get_user } from "../../auth/endpoints"
-import Loading from "../layout/Loading"
+import Loading from "../props/Loading"
 
 interface SpannnProps {
   children: React.ReactNode
@@ -86,7 +86,7 @@ const Profile = () => {
 
       </article>
 
-      { loading ? <Loading /> : <></> }
+      { loading && <Loading /> }
 
     </div>
   )

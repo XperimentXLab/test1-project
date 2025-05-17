@@ -128,7 +128,7 @@ def logout(request):
 
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
 def request_password_reset_email(request):
   serializer = PasswordResetSerializer(data=request.data)
   if serializer.is_valid():
@@ -138,9 +138,8 @@ def request_password_reset_email(request):
         uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
         token = default_token_generator.make_token(user)
 
-        #frontend_url = getattr(settings, 'FRONTEND_URL', 'https://test1-project.vercel.app') 
-        frontend_url = getattr(settings, 'FRONTEND_URL', 'https://localhost:5173')
-        reset_link = f"{frontend_url}/reset-password-confirm/{uidb64}/{token}/"
+        #frontend_url = getattr(settings, 'CSRF_TRUSTED_ORIGINS')
+        reset_link = f"http://localhost:5173/reset-password-confirm/{uidb64}/{token}/"
         
         subject = 'Password Reset Requested'
         reset_password_template = "password_reset_email.html"
@@ -164,6 +163,7 @@ def request_password_reset_email(request):
         # print(f"DEBUG: Password reset link for {user.email}: {reset_link}") # For local testing if email is not set up
 
         logger.info(f"Password reset link for {user.email}: {reset_link}")
+        print(f"DEBUG: Password reset link for {user.email}: {reset_link}")
         return Response({'message': 'If an account with this email, a password reset link will be sent.'}, status=200)
      except User.DoesNotExist:
         return Response({'message': 'If an account with this email exists, a password reset link has been sent.'}, status=200)

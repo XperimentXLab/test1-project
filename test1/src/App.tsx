@@ -10,6 +10,7 @@ import ProtectedRoute from "./auth/ProtectedRoute"
 import Others from "./components/pages/Others"
 import ResetPasswordConfirmPage from "./components/pages/ResetPasswordConfirmPage"
 import ForgotPassword from "./components/pages/ForgotPassword"
+import Assets from "./components/pages/Assets"
 
 function App() {
 
@@ -22,6 +23,9 @@ function App() {
         </ProtectedRoute>} />
         <Route path='wallet' element={<ProtectedRoute>
           <Wallet />
+        </ProtectedRoute>} />
+        <Route path="asset" element={<ProtectedRoute>
+          <Assets />
         </ProtectedRoute>} />
         <Route path="others" element={<ProtectedRoute>
           <Others />

@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { Link, useNavigate } from "react-router"
 import { register } from "../../auth/endpoints"
+import Loading from "../props/Loading"
 
 
 const Register = () => {
@@ -11,6 +12,7 @@ const Register = () => {
   const [password, setPassword] = useState<string>('')
   const [confirmPassword, setConfirmPassword] = useState<string>('')
 
+  const [loading, setLoading] = useState<boolean>(false)
   const [errorMessage, setErrorMessage] = useState<string>('')
 
   const navigate = useNavigate()
@@ -47,6 +49,7 @@ const Register = () => {
       return passwordError
     }
     try {
+      setLoading(true)
       await register({
         username, 
         email, 
@@ -67,6 +70,8 @@ const Register = () => {
       } else {
         setErrorMessage('Server error. Please contact administrator')
       }
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -125,6 +130,8 @@ const Register = () => {
           </span>
         </form>
       </div>
+
+      {loading && <Loading />}
     </div>
   )
 }

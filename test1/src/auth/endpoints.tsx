@@ -22,7 +22,7 @@ interface PasswordResetConfirmDataRes {
 
 
 export const reset_password_request = async (email: string) => {
-  const response = await api.post('/password_reset/', email)
+  const response = await api.post('/password_reset/', {email: email})
   return response.data
 }
 

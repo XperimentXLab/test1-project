@@ -67,7 +67,7 @@ class SetNewPasswordSerializer(serializers.Serializer):
   def validate(self, attrs):
     password = attrs.get('password')
     password2 = attrs.get('password2')
-    uidb64 = self.context.get('uibd64')
+    uidb64 = self.context.get('uidb64')
     token = self.context.get('token')
 
     if not uidb64 or not token:

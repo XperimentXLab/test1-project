@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { get_user } from './endpoints';
 import axios from 'axios';
-import Loading from '../components/layout/Loading';
+import Loading from '../components/props/Loading';
 
 
 interface ProtectedRouteProps {

@@ -2,12 +2,14 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router"
 import { login } from "../../auth/endpoints"
+import Loading from "../props/Loading"
 
 const Login = () => {
 
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
 
+  const [loading, setLoading] = useState<boolean>(false)
   const [errorMessage, setErrorMessage] = useState<string>('')
 
   const navigate = useNavigate()
@@ -21,6 +23,7 @@ const Login = () => {
   const toggleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
+      setLoading(true)
       await login({
         username, password
       })
@@ -39,7 +42,9 @@ const Login = () => {
           // Network errors or other Axios errors where no response was received
           setErrorMessage('Network error. Please check your connection or contact an administrator.');
         }
-    } 
+    } finally {
+      setLoading(false)
+    }
   }
 
   const toggleResetPassword = async () => {
@@ -50,7 +55,7 @@ const Login = () => {
     <div className="flex min-h-screen justify-center">
 
       <div className="flex flex-col items-center p-4 justify-center gap-5">
-        <h1 className="font-bold text-xl">Login Page</h1>
+        <h1 className="font-bold text-xl">Login</h1>
 
         <form className="grid grid-row-3 gap-5 p-5 shadow-xl shadow-amber-600" onSubmit={toggleLogin}>
           <div className="grid grid-row-2 gap-2">
@@ -85,8 +90,10 @@ const Login = () => {
 
         </form>
 
-
       </div>
+
+      {loading && <Loading />}
+      
     </div>
 
   )

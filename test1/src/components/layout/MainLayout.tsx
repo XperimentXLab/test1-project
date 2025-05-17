@@ -14,7 +14,7 @@ export const NavLinkss: React.FC<NavLinkssProps> = ({
   to, className, children
 }) => {
   return (
-    <Link to={to} className={`hover:bg-amber-600 py-1 px-3 rounded-lg ${className}`}>{children}</Link>
+    <Link to={to} className={`hover:bg-amber-600 active:bg-amber-600 py-1 px-3 rounded-lg ${className}`}>{children}</Link>
   )
 }
 
@@ -49,7 +49,7 @@ const MainLayout = () => {
           <GiHamburgerMenu className="cursor-pointer" onClick={toggleOpen}/>
           <h1 className="cursor-default">MMS - Test Project</h1>
           <button onClick={toggleLogout}
-            className="cursor-pointer hover:bg-amber-600 py-1 px-3 rounded-lg"
+            className="cursor-pointer active:bg-amber-600 hover:bg-amber-600 py-1 px-3 rounded-lg"
           >Logout</button>      
         </header>
       </div>
@@ -60,6 +60,7 @@ const MainLayout = () => {
           <NavLinkss to={'/'} >Home</NavLinkss>
           <NavLinkss to={'/profile'} >Profile</NavLinkss>
           <NavLinkss to={'/wallet'}>Wallet</NavLinkss>
+          <NavLinkss to={'/asset'}>Asset</NavLinkss>
           <NavLinkss to={'/others'}>Others</NavLinkss>
         </nav>
         }

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
-import Loading from "../layout/Loading"
+import Loading from "../props/Loading"
 import { get_user } from "../../auth/endpoints"
 import { Spannn } from "./Profile"
+import Buttons from "../props/Buttons"
 
 
 const Wallet = () => {
@@ -43,7 +44,7 @@ const Wallet = () => {
 
       <div className="flex flex-col gap-5">
         <div className="flex flex-col border-gray-500 border py-4 px-6 rounded-xl">
-          <Spannn label="REGISTER POINT">{registerPoint}</Spannn>
+          <Spannn label="Register Point">{registerPoint}</Spannn>
           <form className="grid grid-cols-1 gap-1.5">
             <input placeholder="Enter register point amount" 
               className="border py-1 px-2 rounded-md"
@@ -55,21 +56,21 @@ const Wallet = () => {
               onChange={e => setUsernameTo(e.target.value)}
               value={usernameTo}
             />
-            <button type="submit" className="bg-black text-white active:bg-amber-300 active:text-black hover:bg-amber-300 hover:text-black hover:cursor-pointer py-1 px-2 rounded-md">Transfer</button>
+            <Buttons type="submit">Transfer</Buttons>
           </form>
 
         </div>
 
         <div className="flex flex-col border-gray-500 border py-4 px-6 rounded-xl">
-          <Spannn label="PROFIT POINT">{profitPoint}</Spannn>
-          <Spannn label="WALLET ADDRESS">{walletAddress === undefined ? 'Not set' : walletAddress}</Spannn>
+          <Spannn label="Profit Point">{profitPoint}</Spannn>
+          <Spannn label="Wallet Address">{walletAddress === undefined ? 'Not set' : walletAddress}</Spannn>
           <form className="flex gap-1.5">
             <input placeholder="Enter profit point amount" 
               className="border py-1 px-2 rounded-md"
               onChange={e => setProfitAmount(Number(e.target.value))}
               value={profitAmount}
             />
-            <button type="submit" className="bg-black text-white active:bg-amber-300 active:text-black hover:bg-amber-300 hover:text-black hover:cursor-pointer py-1 px-2 rounded-md">Withdraw</button>
+            <Buttons type="submit">Withdraw</Buttons>
           </form>
         </div>
 
@@ -82,7 +83,7 @@ const Wallet = () => {
               onChange={e => setComissionAmount(Number(e.target.value))}
               value={comissionAmount}
             />
-            <button type="submit" className="bg-black text-white active:bg-amber-300 active:text-black hover:bg-amber-300 hover:text-black hover:cursor-pointer py-1 px-2 rounded-md">Withdraw</button>
+            <Buttons type="submit">Withdraw</Buttons>
           </form>
         </div>
       </div>

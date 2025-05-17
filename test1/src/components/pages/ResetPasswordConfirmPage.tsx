@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { reset_password_confirm } from "../../auth/endpoints"
-import { useNavigate } from "react-router"
+import { useNavigate, useParams } from "react-router"
 
 const ResetPasswordConfirmPage = () => {
 
@@ -9,38 +9,43 @@ const ResetPasswordConfirmPage = () => {
   const [password, setPassword] = useState<string>('')
   const [password2, setPassword2] = useState<string>('')
 
+  const { uidb64, token } = useParams<{ uidb64: string, token: string }>()
+
   const toggleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    try {
-      await reset_password_confirm ({
-        password, password2
-      })
-      alert('Password reset successfully')
-      setPassword('')
-      setPassword2('')
-      navigate('/login')
-    } catch (error: any) {
-      console.error(error)
+    if (uidb64 && token) {
+      try {
+        await reset_password_confirm ({
+          uidb64: uidb64,
+          token: token,
+          password, 
+          password2
+        })
+        alert('Password reset successfully')
+        navigate('/login')
+      } catch (error: any) {
+        console.error(error)
+      }
     }
   }
 
   return (
-    <div>
-      <span>Reset Passsword Page</span>
-      <form onSubmit={toggleSubmit}>
+    <div className="flex flex-col justify-center items-center gap-2 p-2">
+      <span className="font-bold text-xl">Reset Passsword</span>
+      <form onSubmit={toggleSubmit} className="grid grid-cols-1 items-center justify-center gap-2">
         <label>Please fill in</label>
         <input type="password" placeholder="Enter password"
+          className="border py-1 px-2 rounded-md"
           onChange={e => setPassword(e.target.value)}
           value={password}
         />
         <input type="password" placeholder="Confirm password" 
+          className="border py-1 px-2 rounded-md"
           onChange={e => setPassword2(e.target.value)}
           value={password2}
         />
-        <button type="submit" className="bg-black text-white active:bg-black active:text-white hover:bg-black hover:text-white
-         hover:cursor-pointer">Submit</button>
-        <br />
-        navigate to login
+        <button type="submit" className="bg-black text-white active:bg-amber-300 active:text-white hover:bg-amber-300 hover:text-white
+         hover:cursor-pointer py-1 px-2 rounded-md">Submit</button>
       </form>
     </div>
   )
