@@ -69,7 +69,7 @@ const MainLayout = () => {
       <Outlet />
 
       <footer className="fixed flex bottom-0 p-1 bg-white">
-        <h1>Footer copyright</h1>
+        <h1>&copy; 2025 MMS All rights reserved.</h1>
       </footer>
 
     </div>

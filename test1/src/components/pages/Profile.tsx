@@ -1,29 +1,16 @@
 import React, { useEffect, useState } from "react"
 import { get_user } from "../../auth/endpoints"
 import Loading from "../props/Loading"
-
-interface SpannnProps {
-  children: React.ReactNode
-  label: string
-}
-
-export const Spannn: React.FC<SpannnProps> = ({ children, label }) => {
-  return (
-    <div className="flex gap-2 text-md">
-      <span className="font-bold">{label}: </span>
-      <span className="font-mono">{children}
-      </span>
-    </div>
-  )
-}
-
+import Spannn from "../props/Textt"
 
 const Profile = () => {
 
   const [username, setUsername] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [ic, setIc] = useState<string>('')
+  const [referralCode, setReferralCode] = useState<string>('')
   const [walletAddress, setWalletAddress] = useState<string | undefined>(undefined)
+
   const [editWalletAddress, setEditWalletAddress] = useState<string>('')
 
   const [loading, setLoading] = useState<boolean>(true)
@@ -35,6 +22,7 @@ const Profile = () => {
         setUsername(response.username)
         setEmail(response.email)
         setIc(response.ic)
+        setReferralCode(response.referral_code)
         setWalletAddress(response.wallet_address)
         setLoading(false)
       } catch (error: any) {
@@ -73,6 +61,8 @@ const Profile = () => {
         <Spannn label="EMAIL">{email}</Spannn>
 
         <Spannn label="I/C">{ic}</Spannn>
+
+        <Spannn label="REFERRAL CODE">{referralCode}</Spannn>"
 
         <Spannn label="WALLET ADDRESS">{walletAddress === undefined ? 'Not set' : walletAddress }</Spannn>
         <form onSubmit={toggleWalletAddress} className="flex gap-1.5">

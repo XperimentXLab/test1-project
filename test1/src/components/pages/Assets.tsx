@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-import { Spannn } from "./Profile"
 import Loading from "../props/Loading"
 import Buttons from "../props/Buttons"
+import Spannn from "../props/Textt"
 
 
 const Assets = () => {

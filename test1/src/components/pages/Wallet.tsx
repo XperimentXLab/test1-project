@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import Loading from "../props/Loading"
 import { get_user } from "../../auth/endpoints"
-import { Spannn } from "./Profile"
 import Buttons from "../props/Buttons"
+import Spannn from "../props/Textt"
 
 
 const Wallet = () => {
@@ -76,7 +76,7 @@ const Wallet = () => {
 
         <div className="flex flex-col border-gray-500 border py-4 px-6 rounded-xl">
           <Spannn label="COMISSION POINT">{comissionPoint}</Spannn>
-          <Spannn label="WALLET ADDRESS">{walletAddress === undefined ? 'Not set' : walletAddress}</Spannn>
+          <Spannn label="Wallet Address">{walletAddress === undefined ? 'Not set' : walletAddress}</Spannn>
           <form className="flex gap-1.5">
             <input placeholder="Enter comission point amount" 
               className="border py-1 px-2 rounded-md"
